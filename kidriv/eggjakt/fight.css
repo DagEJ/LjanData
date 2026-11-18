@@ -1,0 +1,234 @@
+/* Sidespillet: kollega-boble, samtale og «Kontorkampen». Alt ligger inni #stage (960x600). */
+
+/* ---------- Snakkeboble over kollega ---------- */
+.col-bubble {
+  position: absolute;
+  z-index: 8;
+  transform: translate(-50%, -100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px 9px;
+  background: #fff;
+  border: 3px solid #23262f;
+  border-radius: 16px;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.25);
+  pointer-events: auto;
+}
+.col-bubble::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -13px;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-right: 3px solid #23262f;
+  border-bottom: 3px solid #23262f;
+  transform: translateX(-50%) rotate(45deg);
+}
+.col-bubble.pop { animation: cbPop 0.22s ease-out; }
+@keyframes cbPop {
+  from { transform: translate(-50%, -100%) scale(0.4); opacity: 0; }
+  to { transform: translate(-50%, -100%) scale(1); opacity: 1; }
+}
+.cb-dots { display: flex; gap: 5px; height: 8px; align-items: center; }
+.cb-dots i {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #b9bdc7;
+  animation: cbDot 1.2s infinite ease-in-out;
+}
+.cb-dots i:nth-child(2) { animation-delay: 0.15s; }
+.cb-dots i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes cbDot { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-4px); background: #7d8290; } }
+.cb-btn {
+  position: relative;
+  z-index: 1;
+  font: bold 14px "Trebuchet MS", sans-serif;
+  color: #fff;
+  background: #3a6ea5;
+  border: 0;
+  border-radius: 10px;
+  padding: 6px 12px;
+  box-shadow: 0 3px 0 #27507a;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.cb-btn:hover { background: #4580bd; }
+.cb-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #27507a; }
+.cb-btn:focus-visible { outline: 3px solid #ffd23f; outline-offset: 2px; }
+
+/* ---------- Samtale ---------- */
+#talkOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: linear-gradient(to bottom, rgba(16, 18, 26, 0.15), rgba(16, 18, 26, 0.75));
+  animation: talkIn 0.25s ease-out;
+}
+@keyframes talkIn { from { opacity: 0; } to { opacity: 1; } }
+.talk-scene {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 70px;
+}
+.talk-side {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 330px;
+}
+.talk-side canvas {
+  width: 220px;
+  height: 230px;
+  display: block;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+}
+.talk-name {
+  margin-top: -4px;
+  padding: 4px 16px;
+  border-radius: 10px;
+  background: #23262f;
+  color: #fff;
+  font-weight: bold;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+}
+.talk-say {
+  position: absolute;
+  bottom: 255px;
+  min-width: 190px;
+  max-width: 330px;
+  min-height: 52px;
+  padding: 13px 18px;
+  background: #fff;
+  border: 3px solid #23262f;
+  border-radius: 18px;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+  font-size: 19px;
+  font-weight: bold;
+  line-height: 1.35;
+  color: #23262f;
+  transition: opacity 0.2s;
+}
+.talk-side.left .talk-say { left: 40px; }
+.talk-side.right .talk-say { right: 40px; text-align: right; }
+.talk-say::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  width: 18px; height: 18px;
+  background: #fff;
+  border-right: 3px solid #23262f;
+  border-bottom: 3px solid #23262f;
+  transform: rotate(45deg);
+}
+.talk-side.left .talk-say::after { left: 60px; }
+.talk-side.right .talk-say::after { right: 60px; }
+.talk-say.dim { opacity: 0.55; }
+
+.talk-choices {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  min-height: 74px;
+  padding: 14px 0 20px;
+}
+.talk-btn {
+  font: bold 18px "Trebuchet MS", sans-serif;
+  color: #23262f;
+  background: #fff;
+  border: 3px solid #23262f;
+  border-radius: 14px;
+  padding: 10px 22px;
+  box-shadow: 0 5px 0 #23262f;
+  cursor: pointer;
+  animation: talkIn 0.2s ease-out;
+}
+.talk-btn:hover { transform: translateY(-2px); box-shadow: 0 7px 0 #23262f; }
+.talk-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #23262f; }
+.talk-btn:focus-visible { outline: 3px solid #ffd23f; outline-offset: 3px; }
+.talk-btn.fight {
+  color: #fff;
+  background: #d63a1c;
+  border-color: #6e1a0b;
+  box-shadow: 0 5px 0 #6e1a0b;
+  letter-spacing: 0.05em;
+}
+.talk-btn.fight:hover { background: #ea4a2a; box-shadow: 0 7px 0 #6e1a0b; }
+
+/* ---------- Kontorkampen ---------- */
+#fightOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  background: #111;
+  animation: fightIn 0.35s ease-out;
+}
+@keyframes fightIn {
+  0% { opacity: 0; transform: scale(1.08); }
+  100% { opacity: 1; transform: scale(1); }
+}
+#fightOverlay canvas { position: absolute; inset: 0; width: 960px; height: 600px; display: block; }
+.fight-help {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 14px;
+  padding: 6px 14px;
+  border-radius: 12px;
+  background: rgba(20, 22, 30, 0.72);
+  color: #e9ebf0;
+  font-size: 13px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.fight-help kbd {
+  min-width: 18px;
+  padding: 0 4px;
+  font-size: 12px;
+  color: #23262f;
+}
+.fight-panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 12, 20, 0.45);
+}
+.fight-card {
+  width: 440px;
+  padding: 24px 28px 26px;
+  border-radius: 18px;
+  background: #fff;
+  text-align: center;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  animation: talkIn 0.25s ease-out;
+}
+.fight-card h2 { margin: 0 0 8px; font-size: 28px; color: #23262f; }
+.fight-card p { margin: 0 0 18px; font-size: 16px; line-height: 1.5; color: #3a3e4a; }
+.fp-buttons { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.fight-btn {
+  min-width: 240px;
+  font: bold 18px "Trebuchet MS", sans-serif;
+  color: #fff;
+  background: #ef6c2f;
+  border: 0;
+  border-radius: 12px;
+  padding: 11px 24px;
+  box-shadow: 0 5px 0 #c85f17;
+  cursor: pointer;
+}
+.fight-btn:hover { transform: translateY(-2px); box-shadow: 0 7px 0 #c85f17; }
+.fight-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #c85f17; }
+.fight-btn.secondary { background: #e4e6eb; color: #23262f; box-shadow: 0 5px 0 #b9bdc7; }
+.fight-btn:focus-visible { outline: 3px solid #3a6ea5; outline-offset: 3px; }

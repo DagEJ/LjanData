@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jakten på de forsvunne eggene</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="fight.css">
+</head>
+<body>
+  <div id="stage">
+    <canvas id="game"></canvas>
+
+    <!-- HUD -->
+    <div id="hud" class="hidden">
+      <div id="energyBox">
+        <span class="hud-label">⚡ Energi</span>
+        <div id="energyBar"><div id="energyFill"></div></div>
+        <span id="energyVal">100</span>
+      </div>
+      <div id="hudRight">
+        <span id="status"></span>
+        <span id="timer">00:00</span>
+      </div>
+    </div>
+    <div id="inventory" class="hidden"></div>
+    <div id="toast"></div>
+    <div id="tooltip"></div>
+    <div id="vignette"></div>
+
+    <!-- Nærbilde -->
+    <div id="closeup" class="hidden">
+      <div class="cu-panel">
+        <h2 id="cuTitle"></h2>
+        <canvas id="cuCanvas"></canvas>
+        <p id="cuText"></p>
+        <div id="cuButtons"></div>
+      </div>
+    </div>
+
+    <!-- Startskjerm -->
+    <div id="screenStart" class="screen">
+      <div class="screen-card">
+        <div class="egg-row">🥚🥚🥚🥚🥚🥚</div>
+        <h1>Jakten på de forsvunne eggene</h1>
+        <p class="lead">Resepsjonisten ringer deg: «Kåre har mistet eggekartongen sin!
+          Han har lagt den fra seg et sted på kontoret og husker ikke hvor.» Finn den før du går tom for energi!</p>
+        <div class="rules">
+          <div>
+            <h3>Slik spiller du</h3>
+            <ul>
+              <li><kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd> Gå rundt</li>
+              <li>🖱️ Klikk på ting i nærheten</li>
+              <li><kbd>I</kbd> Varmesyn (når du har databrillene)</li>
+              <li><kbd>Esc</kbd> Pause</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Energi</h3>
+            <ul>
+              <li>Du starter med <b>100</b> energi</li>
+              <li><b>−1</b> hvert 10. sekund</li>
+              <li><b>−10</b> hver gang du flytter på noe</li>
+              <li>☕ 🍫 🍰 gir energi – 🗑️ søppel tapper!</li>
+            </ul>
+          </div>
+        </div>
+        <button id="startBtn" class="big-btn">Start jakten</button>
+      </div>
+    </div>
+
+    <!-- Pause -->
+    <div id="screenPause" class="screen hidden">
+      <div class="screen-card small">
+        <h1>Pause</h1>
+        <p>Eggene venter. Trykk <kbd>Esc</kbd> eller knappen for å fortsette.</p>
+        <button id="resumeBtn" class="big-btn">Fortsett</button>
+      </div>
+    </div>
+
+    <!-- Slutt -->
+    <div id="screenEnd" class="screen hidden">
+      <div class="screen-card small">
+        <div id="endIcon" class="egg-row"></div>
+        <h1 id="endTitle"></h1>
+        <p id="endText"></p>
+        <div id="endStats"></div>
+        <button id="againBtn" class="big-btn">Spill igjen</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="audio.js"></script>
+  <script src="world.js"></script>
+  <script src="draw.js"></script>
+  <script src="items.js"></script>
+  <script src="closeup.js"></script>
+  <script src="fight.js"></script>
+  <script src="colleagues.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
